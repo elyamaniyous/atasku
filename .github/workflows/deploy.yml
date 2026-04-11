@@ -1,0 +1,15 @@
+name: Deploy to Railway
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: railwayapp/railway-github-action@v1
+        with:
+          service: promaint-cloud
+        env:
+          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
