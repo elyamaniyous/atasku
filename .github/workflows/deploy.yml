@@ -10,6 +10,6 @@ jobs:
       - uses: actions/checkout@v4
       - uses: railwayapp/railway-github-action@v1
         with:
-          service: promaint-cloud
+          service: atasku
         env:
           RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
