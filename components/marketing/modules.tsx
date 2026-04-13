@@ -2,96 +2,80 @@
 
 import { motion } from 'framer-motion'
 import {
-  ClipboardList,
-  Settings,
-  Database,
-  CalendarDays,
-  Bell,
-  BarChart3,
+  ClipboardList, Wrench, Settings, Calendar, Bell, BarChart3,
+  Brain, Users, CreditCard, FileText, WifiOff, Shield,
 } from 'lucide-react'
 
 const modules = [
-  {
-    icon: ClipboardList,
-    title: 'Ordres de Travail',
-    description: 'Kanban visuel, suivi du cycle de vie complet',
-  },
-  {
-    icon: Settings,
-    title: 'Maintenance',
-    description: 'Préventive et corrective, planification automatique',
-  },
-  {
-    icon: Database,
-    title: 'Actifs',
-    description: 'Inventaire complet, QR codes, historique',
-  },
-  {
-    icon: CalendarDays,
-    title: 'Planning',
-    description: 'Calendrier interactif, gestion de charge',
-  },
-  {
-    icon: Bell,
-    title: 'Alertes',
-    description: 'Notifications temps réel, WhatsApp, SMS',
-  },
-  {
-    icon: BarChart3,
-    title: 'Rapports',
-    description: 'KPIs (MTTR, MTBF), export PDF/Excel',
-  },
+  { icon: ClipboardList, name: 'Ordres de travail', desc: 'Kanban + Liste + Detail', tier: 'Gratuit' },
+  { icon: Wrench, name: 'Maintenance', desc: 'Correctif + Preventif + Historique', tier: 'Gratuit' },
+  { icon: Settings, name: 'Actifs', desc: 'Parc equipements complet', tier: 'Gratuit' },
+  { icon: Calendar, name: 'Planning', desc: 'Calendrier + Charge equipe', tier: 'Gratuit' },
+  { icon: Bell, name: 'Alertes', desc: 'Push + Email + SLA', tier: 'Gratuit' },
+  { icon: BarChart3, name: 'Rapports', desc: 'KPI + Graphiques + Export', tier: 'Gratuit' },
+  { icon: Brain, name: 'IA Insights', desc: 'Predictions + Diagnostic', tier: 'Pro' },
+  { icon: FileText, name: 'PDF', desc: 'DI + BT + RS + Rapport', tier: 'Pro' },
+  { icon: WifiOff, name: 'Hors-ligne', desc: 'IndexedDB + Sync auto', tier: 'Pro' },
+  { icon: Users, name: 'Equipe', desc: 'Roles + Invitations', tier: 'Gratuit' },
+  { icon: CreditCard, name: 'Facturation', desc: 'Stripe + Plans + Usage', tier: 'Gratuit' },
+  { icon: Shield, name: 'Audit', desc: 'Journal d\'audit complet', tier: 'Entreprise' },
 ]
 
 export function Modules() {
   return (
-    <section id="modules" className="bg-zinc-950 py-24 sm:py-32">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <section id="modules" className="relative py-24 lg:py-32 bg-stone-900">
+      {/* Subtle grid */}
+      <div className="absolute inset-0 opacity-5" style={{
+        backgroundImage: `linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)`,
+        backgroundSize: '40px 40px',
+      }} />
+
+      <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
           className="text-center"
         >
-          <h2 className="font-heading font-bold text-3xl sm:text-4xl text-white">
-            6 modules, une seule plateforme
+          <span className="text-xs font-bold tracking-widest text-red-400 uppercase">Modules</span>
+          <h2 className="mt-3 font-heading text-3xl font-bold text-white sm:text-4xl">
+            12 modules, une seule plateforme
           </h2>
-          <p className="mt-4 text-lg text-zinc-400 max-w-2xl mx-auto">
-            Tout ce dont vous avez besoin pour gérer votre maintenance
+          <p className="mx-auto mt-4 max-w-2xl text-stone-400">
+            De la gestion des OT a l&apos;intelligence artificielle, chaque module
+            est concu pour travailler ensemble.
           </p>
         </motion.div>
 
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 mt-16">
-          {modules.map((mod, i) => (
+        <div className="mt-16 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+          {modules.map((m, i) => (
             <motion.div
-              key={mod.title}
-              initial={{ opacity: 0, y: 20 }}
+              key={m.name}
+              initial={{ opacity: 0, y: 15 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.4, delay: i * 0.08 }}
-              className="group rounded-2xl bg-zinc-900 border border-zinc-800 p-6 hover:border-zinc-700 hover:bg-zinc-800/50 transition-all duration-300"
+              transition={{ delay: i * 0.04 }}
+              className="group flex items-center gap-3 rounded-xl border border-stone-800 bg-stone-900/50 p-4 transition-all hover:border-stone-700 hover:bg-stone-800/50"
             >
-              <div className="size-11 rounded-xl flex items-center justify-center mb-4 bg-zinc-800 group-hover:bg-amber-500/10 transition-colors">
-                <mod.icon className="size-5 text-zinc-400 group-hover:text-amber-400 transition-colors" />
+              <div className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-stone-800 group-hover:bg-red-600/20 transition-colors">
+                <m.icon className="size-5 text-stone-400 group-hover:text-red-400 transition-colors" />
               </div>
-              <h3 className="font-bold text-white mb-1.5">{mod.title}</h3>
-              <p className="text-sm text-zinc-500">{mod.description}</p>
+              <div className="min-w-0">
+                <div className="flex items-center gap-2">
+                  <span className="text-sm font-semibold text-white truncate">{m.name}</span>
+                  {m.tier !== 'Gratuit' && (
+                    <span className={`shrink-0 rounded px-1 py-0.5 text-[9px] font-bold ${
+                      m.tier === 'Pro' ? 'bg-amber-500/20 text-amber-400' : 'bg-violet-500/20 text-violet-400'
+                    }`}>
+                      {m.tier}
+                    </span>
+                  )}
+                </div>
+                <div className="text-xs text-stone-500 truncate">{m.desc}</div>
+              </div>
             </motion.div>
           ))}
         </div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.4, delay: 0.5 }}
-          className="mt-10 text-center"
-        >
-          <span className="inline-flex items-center rounded-full bg-amber-500/10 border border-amber-500/20 px-5 py-2 text-sm font-semibold text-amber-400">
-            Tous inclus dans le plan gratuit
-          </span>
-        </motion.div>
       </div>
     </section>
   )
