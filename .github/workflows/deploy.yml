@@ -8,8 +8,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: railwayapp/railway-github-action@v1
-        with:
-          service: promaint-cloud
+      - name: Install Railway CLI
+        run: npm i -g @railway/cli
+      - name: Deploy to Railway
+        run: railway up --service promaint-cloud --detach
         env:
           RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
