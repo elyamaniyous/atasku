@@ -31,6 +31,7 @@ export function AtaskuLogo({ className = '', size = 'default' }: { className?: s
         <circle cx="24" cy="24" r="3" fill="currentColor" className="text-red-600" />
       </svg>
       <span className={`font-heading font-bold tracking-tight ${s.text}`}>Atasku</span>
+      <span className="rounded bg-red-600 px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-widest text-white leading-none">Beta</span>
     </span>
   )
 }

@@ -7,10 +7,10 @@ import { Menu, X } from 'lucide-react'
 import { AtaskuLogo } from './logo'
 
 const navLinks = [
-  { label: 'Fonctionnalites', href: '#fonctionnalites' },
-  { label: 'Modules', href: '#modules' },
-  { label: 'IA', href: '#ia' },
-  { label: 'Tarifs', href: '#tarifs' },
+  { label: 'Fonctionnalites', href: '/#fonctionnalites' },
+  { label: 'Modules', href: '/#modules' },
+  { label: 'IA', href: '/#ia' },
+  { label: 'Tarifs', href: '/#tarifs' },
 ]
 
 export function Navbar() {
