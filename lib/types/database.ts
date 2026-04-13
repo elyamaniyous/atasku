@@ -23,7 +23,14 @@ export type EquipmentGroup = 'ELECTROGEN' | 'TURBINE' | 'TRANSFORMER' | 'PUMP' |
 
 export type Criticality = 'CRITICAL' | 'STANDARD' | 'LOW'
 
-export type AlertType = 'SLA_BREACH' | 'MAINTENANCE_DUE' | 'AI_PREDICTION' | 'STOCK_LOW' | 'SYSTEM'
+export type AlertType =
+  | 'SLA_BREACH' | 'SLA_WARNING'
+  | 'MAINTENANCE_DUE' | 'PREVENTIVE_J1' | 'PREVENTIVE_J3' | 'PREVENTIVE_J7'
+  | 'HOURS_250'
+  | 'OT_UNASSIGNED'
+  | 'AI_PREDICTION'
+  | 'STOCK_LOW'
+  | 'SYSTEM'
 
 export type AlertStatus = 'SENT' | 'DELIVERED' | 'READ' | 'ACKNOWLEDGED'
 

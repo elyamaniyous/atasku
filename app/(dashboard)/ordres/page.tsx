@@ -6,6 +6,7 @@ import { getKanbanData, getWorkOrderStats } from '@/actions/ot'
 import { KanbanBoard } from '@/components/kanban/board'
 import { Button } from '@/components/ui/button'
 import { Skeleton } from '@/components/ui/skeleton'
+import { DIFormDialog } from '@/components/forms/di-form'
 
 export default async function WorkOrdersPage() {
   const { role, user } = await getCurrentUser()
@@ -27,10 +28,12 @@ export default async function WorkOrdersPage() {
           </p>
         </div>
 
-        <Button className="bg-red-600 hover:bg-red-700" disabled>
-          <Plus className="size-4" />
-          Nouvelle DI
-        </Button>
+        <DIFormDialog>
+          <Button className="bg-red-600 hover:bg-red-700">
+            <Plus className="size-4" />
+            Nouvelle DI
+          </Button>
+        </DIFormDialog>
       </div>
 
       {/* Stats row */}

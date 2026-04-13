@@ -9,6 +9,7 @@ import {
   buildWeeklySummaryPrompt,
   buildChatPrompt,
 } from '@/lib/ai/prompts'
+import { PLANS, type PlanKey } from '@/lib/stripe/plans'
 
 // ---- Auth helper ----
 
@@ -25,6 +26,37 @@ async function getAuthenticatedContext() {
   if (!member) redirect('/onboarding')
 
   return { supabase, user, orgId: member.org_id }
+}
+
+// ---- AI rate limit check ----
+
+async function checkAIRateLimit(orgId: string): Promise<{ allowed: boolean; remaining: number }> {
+  const supabase = await createClient()
+
+  // Get org plan
+  const { data: org } = await supabase
+    .from('organizations')
+    .select('plan')
+    .eq('id', orgId)
+    .single()
+
+  const plan = (org?.plan || 'FREE') as PlanKey
+  const limit = PLANS[plan].aiCallsPerWeek
+
+  // Unlimited plans (-1)
+  if (limit === -1) return { allowed: true, remaining: -1 }
+
+  // Count AI calls this week
+  const weekAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString()
+  const { count } = await supabase
+    .from('ai_insights')
+    .select('id', { count: 'exact', head: true })
+    .eq('org_id', orgId)
+    .gte('created_at', weekAgo)
+
+  const used = count || 0
+  const remaining = Math.max(0, limit - used)
+  return { allowed: used < limit, remaining }
 }
 
 // ---- Types ----
@@ -105,6 +137,19 @@ export interface AIInsightsData {
 export async function getAIInsights() {
   try {
     const { supabase, orgId } = await getAuthenticatedContext()
+
+    // Check AI rate limit
+    const rateLimit = await checkAIRateLimit(orgId)
+    if (!rateLimit.allowed) {
+      return {
+        generatedAt: new Date().toISOString(),
+        equipment: [],
+        anomalies: [],
+        weeklySummary: { highlights: [], warnings: [], recommendations: [] },
+        kpiTrends: [],
+        error: `Limite IA atteinte (${PLANS.FREE.aiCallsPerWeek}/semaine). Passez au plan Pro pour un accès illimité.`,
+      }
+    }
 
     // Fetch equipment with aggregated intervention data
     const [

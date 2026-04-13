@@ -3,6 +3,7 @@ import { Plus, Kanban, List } from 'lucide-react'
 import { getWorkOrders, getTechnicians } from '@/actions/ot'
 import { OTTable, type OTTableRow } from '@/components/ot/ot-table'
 import { Button } from '@/components/ui/button'
+import { DIFormDialog } from '@/components/forms/di-form'
 
 type SearchParams = Promise<{
   status?: string
@@ -72,10 +73,12 @@ export default async function WorkOrdersListPage({
           </p>
         </div>
 
-        <Button className="bg-red-600 hover:bg-red-700" disabled>
-          <Plus className="size-4" />
-          Nouvelle DI
-        </Button>
+        <DIFormDialog>
+          <Button className="bg-red-600 hover:bg-red-700">
+            <Plus className="size-4" />
+            Nouvelle DI
+          </Button>
+        </DIFormDialog>
       </div>
 
       {/* View toggle */}

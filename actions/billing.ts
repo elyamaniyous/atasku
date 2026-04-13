@@ -139,7 +139,7 @@ export async function getBillingInfo() {
   }
 
   // Get current usage counts
-  const [{ count: userCount }, { count: equipmentCount }] = await Promise.all([
+  const [{ count: userCount }, { count: equipmentCount }, { data: storageData }] = await Promise.all([
     supabase
       .from('org_members')
       .select('*', { count: 'exact', head: true })
@@ -149,7 +149,16 @@ export async function getBillingInfo() {
       .from('equipment')
       .select('*', { count: 'exact', head: true })
       .eq('org_id', member.org_id),
+    supabase
+      .from('attachments')
+      .select('size_bytes')
+      .eq('org_id', member.org_id),
   ])
+
+  // Calculate storage in MB
+  const storageMb = Math.round(
+    (storageData || []).reduce((sum, a) => sum + (a.size_bytes || 0), 0) / (1024 * 1024)
+  )
 
   // Calculate trial days remaining
   const trialDaysLeft = org.trial_ends_at
@@ -173,7 +182,7 @@ export async function getBillingInfo() {
     usage: {
       users: { current: userCount || 0, max: org.max_users },
       equipment: { current: equipmentCount || 0, max: org.max_equipment },
-      storage: { current: 0, max: org.max_storage_mb }, // TODO: calculate actual storage usage
+      storage: { current: storageMb, max: org.max_storage_mb },
     },
     hasSubscription: !!org.stripe_subscription_id,
   }

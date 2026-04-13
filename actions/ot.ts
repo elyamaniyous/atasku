@@ -91,9 +91,20 @@ export async function getWorkOrders(filters?: {
   type?: string
 }) {
   const supabase = await createClient()
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user) return []
+
+  const { data: member } = await supabase
+    .from('org_members')
+    .select('org_id')
+    .eq('user_id', user.id)
+    .single()
+  if (!member) return []
+
   let query = supabase
     .from('work_orders')
     .select('*, equipment(code, designation)')
+    .eq('org_id', member.org_id)
     .order('created_at', { ascending: false })
 
   if (filters?.status) query = query.eq('status', filters.status)
