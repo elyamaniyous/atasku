@@ -1,4 +1,3 @@
-import { Target, Calendar, AlertTriangle } from 'lucide-react'
 import {
   getPreventiveStats,
   getPreventiveSchedule,
@@ -30,20 +29,20 @@ export default async function PreventiveMaintenancePage() {
       {/* KPI Cards */}
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
         <KPICard
-          icon={Target}
+          icon="TrendingUp"
           value={stats.executionRate}
           label="Taux d'exécution"
           suffix="%"
           color="green"
         />
         <KPICard
-          icon={Calendar}
+          icon="Calendar"
           value={stats.dueSoon}
           label="Révisions proches"
           color="orange"
         />
         <KPICard
-          icon={AlertTriangle}
+          icon="AlertTriangle"
           value={stats.overdue}
           label="En retard"
           color="red"

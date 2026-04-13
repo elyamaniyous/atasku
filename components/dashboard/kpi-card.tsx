@@ -2,11 +2,20 @@
 
 import { useEffect, useRef } from 'react'
 import { motion, useMotionValue, useTransform, animate } from 'framer-motion'
-import type { LucideIcon } from 'lucide-react'
+import {
+  AlertTriangle, Wrench, CheckCircle, Clock, ClipboardList, Activity,
+  Zap, Settings, BarChart3, Shield, TrendingUp, Calendar,
+  type LucideIcon,
+} from 'lucide-react'
 import { cn } from '@/lib/utils'
 
+const ICON_MAP: Record<string, LucideIcon> = {
+  AlertTriangle, Wrench, CheckCircle, Clock, ClipboardList, Activity,
+  Zap, Settings, BarChart3, Shield, TrendingUp, Calendar,
+}
+
 interface KPICardProps {
-  icon: LucideIcon
+  icon: string
   value: number
   label: string
   suffix?: string
@@ -77,7 +86,8 @@ function AnimatedNumber({ value, suffix }: { value: number; suffix?: string }) {
   )
 }
 
-export function KPICard({ icon: Icon, value, label, suffix, color, subtitle }: KPICardProps) {
+export function KPICard({ icon, value, label, suffix, color, subtitle }: KPICardProps) {
+  const Icon = ICON_MAP[icon] || ClipboardList
   const colors = COLOR_MAP[color] || COLOR_MAP.blue
 
   return (

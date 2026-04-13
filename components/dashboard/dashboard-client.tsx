@@ -85,40 +85,40 @@ export function DashboardClient({
 
   const kpiCards = [
     {
-      icon: ClipboardList,
+      icon: 'ClipboardList',
       value: kpis.activeOTs,
       label: 'OT actifs',
       color: 'blue',
       subtitle: data.urgentUnassigned > 0 ? `${data.urgentUnassigned} urgent${data.urgentUnassigned > 1 ? 's' : ''} non affecte${data.urgentUnassigned > 1 ? 's' : ''}` : undefined,
     },
     {
-      icon: AlertTriangle,
+      icon: 'AlertTriangle',
       value: kpis.urgentOTs,
       label: 'Urgents',
       color: 'red',
     },
     {
-      icon: CheckCircle,
+      icon: 'CheckCircle',
       value: kpis.completedThisMonth,
       label: 'Termines ce mois',
       color: 'green',
     },
     {
-      icon: Clock,
+      icon: 'Clock',
       value: kpis.mttr,
       label: 'MTTR moyen',
       suffix: 'h',
       color: 'orange',
     },
     {
-      icon: Activity,
+      icon: 'Activity',
       value: kpis.availability,
       label: 'Disponibilite',
       suffix: '%',
       color: 'green',
     },
     {
-      icon: Cog,
+      icon: 'Settings',
       value: kpis.totalEquipment,
       label: 'Equipements',
       color: 'blue',

@@ -136,7 +136,7 @@ export function ReportsClient({
 
   const kpiCards = [
     {
-      icon: Clock,
+      icon: 'Clock',
       value: data.kpis.mttr,
       label: 'MTTR moyen',
       suffix: 'h',
@@ -144,14 +144,14 @@ export function ReportsClient({
       subtitle: `${data.kpis.completedOTs} OT termines`,
     },
     {
-      icon: Activity,
+      icon: 'Activity',
       value: data.kpis.availability,
       label: 'Disponibilite',
       suffix: '%',
       color: 'green',
     },
     {
-      icon: ShieldCheck,
+      icon: 'Shield',
       value: data.kpis.preventiveRate,
       label: 'Taux preventif',
       suffix: '%',
@@ -159,7 +159,7 @@ export function ReportsClient({
       subtitle: `${data.kpis.preventiveCount} preventifs / ${data.kpis.correctiveCount} correctifs`,
     },
     {
-      icon: ClipboardList,
+      icon: 'ClipboardList',
       value: data.kpis.totalOTs,
       label: 'Total OT',
       color: 'violet',

@@ -1,4 +1,4 @@
-import { AlertTriangle, Wrench, CheckCircle, Clock } from 'lucide-react'
+import { AlertTriangle } from 'lucide-react'
 import { getCorrectiveStats, getCorrectiveOTs } from '@/actions/maintenance'
 import { KPICard } from '@/components/dashboard/kpi-card'
 import { OTTable } from '@/components/ot/ot-table'
@@ -32,25 +32,25 @@ export default async function CorrectiveMaintenancePage() {
       {/* KPI Cards */}
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
         <KPICard
-          icon={AlertTriangle}
+          icon="AlertTriangle"
           value={stats.total}
           label="Total pannes"
           color="red"
         />
         <KPICard
-          icon={Wrench}
+          icon="Wrench"
           value={stats.active}
           label="En cours"
           color="orange"
         />
         <KPICard
-          icon={CheckCircle}
+          icon="CheckCircle"
           value={stats.completedThisMonth}
           label="Résolues ce mois"
           color="green"
         />
         <KPICard
-          icon={Clock}
+          icon="Clock"
           value={stats.avgResolutionHours}
           label="Temps moyen"
           suffix="h"
