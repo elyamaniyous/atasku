@@ -29,7 +29,34 @@ export async function updateSession(request: NextRequest) {
     }
   )
 
-  await supabase.auth.getUser()
+  const { data: { user } } = await supabase.auth.getUser()
+
+  const pathname = request.nextUrl.pathname
+
+  // Public routes that don't require auth
+  const publicRoutes = ['/home', '/pricing', '/login', '/signup', '/auth/callback', '/api/health', '/api/webhooks']
+  const isPublic = publicRoutes.some(r => pathname.startsWith(r)) || pathname.startsWith('/_next')
+
+  // If user visits root "/" and is NOT authenticated → redirect to /home (landing page)
+  if (pathname === '/' && !user) {
+    const url = request.nextUrl.clone()
+    url.pathname = '/home'
+    return NextResponse.redirect(url)
+  }
+
+  // If user visits auth pages while logged in → redirect to dashboard
+  if (user && (pathname === '/login' || pathname === '/signup')) {
+    const url = request.nextUrl.clone()
+    url.pathname = '/'
+    return NextResponse.redirect(url)
+  }
+
+  // If user visits protected route without auth → redirect to login
+  if (!user && !isPublic) {
+    const url = request.nextUrl.clone()
+    url.pathname = '/login'
+    return NextResponse.redirect(url)
+  }
 
   return supabaseResponse
 }
